@@ -57,11 +57,6 @@ public function indexAction(Request $request)
         $qb = $datatableQueryBuilder->getQb();
         $qb->andWhere('createdBy.username = :username');
         $qb->setParameter('username', 'root');
-        
-        //Or Using Base Query Implementation. This wiil 
-        $criteria = Criteria::create();
-        $criteria->andWhere(Criteria::expr()->eq('createdBy.username', 'root'));
-        $datatableQueryBuilder->setCriteria($criteria);
 
         return $responseService->getResponse();
     }

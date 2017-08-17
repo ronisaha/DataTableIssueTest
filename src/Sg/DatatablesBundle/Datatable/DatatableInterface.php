@@ -11,7 +11,6 @@
 
 namespace Sg\DatatablesBundle\Datatable;
 
-use Doctrine\Common\Collections\Criteria;
 use Sg\DatatablesBundle\Datatable\Column\ColumnBuilder;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -119,13 +118,6 @@ interface DatatableInterface
      * @return string
      */
     public function getEntity();
-
-    /**
-     * Return Base criteria filter of a list
-     *
-     * @return Criteria
-     */
-    public function getCriteria();
 
     /**
      * Returns the name of this datatable view.

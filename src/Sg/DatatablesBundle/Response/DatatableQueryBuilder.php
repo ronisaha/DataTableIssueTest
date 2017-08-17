@@ -11,7 +11,6 @@
 
 namespace Sg\DatatablesBundle\Response;
 
-use Doctrine\Common\Collections\Criteria;
 use Sg\DatatablesBundle\Datatable\Column\ColumnInterface;
 use Sg\DatatablesBundle\Datatable\Filter\FilterInterface;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
@@ -186,9 +185,6 @@ class DatatableQueryBuilder
      */
     private $useCountResultCacheArgs = [false];
 
-    /** @var Criteria */
-    private $baseCriteria = null;
-
     //-------------------------------------------------
     // Ctor. && Init column arrays
     //-------------------------------------------------
@@ -225,8 +221,6 @@ class DatatableQueryBuilder
         $this->options = $datatable->getOptions();
         $this->features = $datatable->getFeatures();
         $this->ajax = $datatable->getAjax();
-
-        $this->baseCriteria = $datatable->getCriteria();
 
         $this->initColumnArrays();
     }
@@ -321,7 +315,6 @@ class DatatableQueryBuilder
         $this->setSelectFrom();
         $this->setJoins($this->qb);
         $this->setWhere($this->qb);
-        $this->addCriteria($this->qb);
         $this->setOrderBy();
         $this->setLimit();
 
@@ -540,9 +533,6 @@ class DatatableQueryBuilder
         $qb = $this->em->createQueryBuilder();
         $qb->select('count(distinct '.$this->entityShortName.'.'.$this->rootEntityIdentifier.')');
         $qb->from($this->entityName, $this->entityShortName);
-
-        $this->addCriteria($qb);
-
         $query = $qb->getQuery();
         $query->useQueryCache($this->useCountQueryCache);
         call_user_func_array([$query, 'useResultCache'], $this->useCountResultCacheArgs);
@@ -859,22 +849,5 @@ class DatatableQueryBuilder
         }
 
         return $this;
-    }
-
-    /**
-     * @param Criteria $baseCriteria
-     * @return DatatableQueryBuilder
-     */
-    public function setBaseCriteria($baseCriteria)
-    {
-        $this->baseCriteria = $baseCriteria;
-        return $this;
-    }
-
-    private function addCriteria(QueryBuilder $qb)
-    {
-        if($this->baseCriteria !== null) {
-            $qb->addCriteria($this->baseCriteria);
-        }
     }
 }

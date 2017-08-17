@@ -297,12 +297,4 @@ abstract class AbstractDatatable implements DatatableInterface
             throw new Exception('AbstractDatatable::validateName(): The result of the getName method can only contain letters, numbers, underscore and dashes.');
         }
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCriteria()
-    {
-        return null;
-    }
 }

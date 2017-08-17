@@ -118,12 +118,11 @@ class DatatableResponse
      *
      * @param bool $countAllResults
      * @param bool $outputWalkers
-     * @param bool $fetchJoinCollection
      *
      * @return JsonResponse
      * @throws Exception
      */
-    public function getResponse($countAllResults = true, $outputWalkers = false, $fetchJoinCollection = true)
+    public function getResponse($countAllResults = true, $outputWalkers = false)
     {
         if (null === $this->datatable) {
             throw new Exception('DatatableResponse::getResponse(): Set a Datatable class with setDatatable().');
@@ -133,7 +132,7 @@ class DatatableResponse
             throw new Exception('DatatableResponse::getResponse(): A DatatableQueryBuilder instance is needed. Call getDatatableQueryBuilder().');
         }
 
-        $paginator = new Paginator($this->datatableQueryBuilder->execute(), $fetchJoinCollection);
+        $paginator = new Paginator($this->datatableQueryBuilder->execute(), true);
         $paginator->setUseOutputWalkers($outputWalkers);
 
         $formatter = new DatatableFormatter();
