@@ -1,0 +1,37 @@
+# Symfony directories
+/web/bundles/
+/var/bootstrap.php.cache
+/var/SymfonyRequirements.php
+/var/cache/*
+/var/logs/*
+/var/sessions/*
+!var/cache/.gitkeep
+!var/logs/.gitkeep
+!/var/sessions/.gitkeep
+/vendor/
+/bin/*
+!bin/console
+/composer.phar
+
+# Configuration files
+/phpunit.xml
+/app/config/parameters.ini
+/app/config/parameters.yml
+/web/.htaccess
+/web/api/.htaccess
+
+# IDE
+.idea
+.nbproject
+
+# OS
+Thumbs.db
+.DS_Store
+
+#Deprecator check library
+/.rules
+
+#upload directory
+/web/uploads/*
+!/web/uploads/.gitkeep
+/composer.lock
