@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Datatables\PostDatatable;
 use AppBundle\Entity\Post;
 
+use Doctrine\Common\Collections\Criteria;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -83,9 +84,10 @@ class PostController extends Controller
             $responseService->setDatatable($datatable);
 
             $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-            $qb = $datatableQueryBuilder->getQb();
-            $qb->andWhere($qb->expr()->eq('createdBy', ':user'))
-                ->setParameter('user', $this->getUser());
+            $criteria = Criteria::create();
+            $criteria->andWhere(Criteria::expr()->eq('createdBy', $this->getUser()));
+            $datatableQueryBuilder->setBaseCriteria($criteria);
+
             $datatableQueryBuilder->buildQuery();
 
             return $responseService->getResponse();
