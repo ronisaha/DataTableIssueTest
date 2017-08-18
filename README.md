@@ -1,7 +1,7 @@
 DtBundleDemo
 ============
 
-Symfony3.3 Demo Project For https://github.com/roni/DatatablesBundle (dev-production). 
+Symfony3.3 Demo Project For https://github.com/ronisaha/DatatablesBundle (dev-production). 
 Code taken from https://github.com/stwe/DtBundleDemo10.git
 
 ## Install
