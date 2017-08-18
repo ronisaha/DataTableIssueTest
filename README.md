@@ -1,7 +1,7 @@
 DtBundleDemo
 ============
 
-Symfony3.2 Demo Project For https://github.com/stwe/DatatablesBundle (dev-master). 
+Symfony3.3 Demo Project For https://github.com/roni/DatatablesBundle (dev-production). 
 Code taken from https://github.com/stwe/DtBundleDemo10.git
 
 ## Install
@@ -9,7 +9,8 @@ Code taken from https://github.com/stwe/DtBundleDemo10.git
 ### 1. Clone the project with Git:
 
 ```
-git clone https://github.com/ronisaha/DataTableIssueTest.git
+git clone https://github.com/ronisaha/DataTableIssueTest.git   
+git checkout fork
 ```
 
 ### 2. Install composer dependencies

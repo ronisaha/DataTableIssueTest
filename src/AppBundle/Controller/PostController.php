@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Datatables\PostDatatable;
 use AppBundle\Entity\Post;
 
+use Doctrine\Common\Collections\Criteria;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,18 +41,11 @@ class PostController extends Controller
 
         /** @var DatatableInterface $datatable */
         $datatable = $this->get('sg_datatables.factory')->create(PostDatatable::class);
-        $datatable->buildDatatable();
 
         if ($isAjax) {
-            $responseService = $this->get('sg_datatables.response');
-            $responseService->setDatatable($datatable);
-
-            $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-            $datatableQueryBuilder->buildQuery();
-
-            //dump($datatableQueryBuilder->getQb()->getDQL()); die();
-
-            return $responseService->getResponse();
+            return $this->get('sg_datatables.response')
+                ->setDatatable($datatable)
+                ->getResponse();
         }
 
         return $this->render('post/index.html.twig', array(
@@ -76,19 +70,13 @@ class PostController extends Controller
 
         /** @var DatatableInterface $datatable */
         $datatable = $this->get('sg_datatables.factory')->create(PostDatatable::class);
-        $datatable->buildDatatable();
 
         if ($isAjax) {
-            $responseService = $this->get('sg_datatables.response');
-            $responseService->setDatatable($datatable);
+            $datatable->getCriteria()->andWhere(Criteria::expr()->eq('createdBy', $this->getUser()));
 
-            $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-            $qb = $datatableQueryBuilder->getQb();
-            $qb->andWhere($qb->expr()->eq('createdBy', ':user'))
-                ->setParameter('user', $this->getUser());
-            $datatableQueryBuilder->buildQuery();
-
-            return $responseService->getResponse();
+            return $this->get('sg_datatables.response')
+                ->setDatatable($datatable)
+                ->getResponse();
         }
 
         return $this->render('post/index.html.twig', array(
