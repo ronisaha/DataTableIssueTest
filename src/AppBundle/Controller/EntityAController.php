@@ -36,18 +36,12 @@ class EntityAController extends Controller
 
         /** @var DatatableInterface $datatable */
         $datatable = $this->get('sg_datatables.factory')->create(EntityADatatable::class);
-        $datatable->buildDatatable();
 
         if ($isAjax) {
-            $responseService = $this->get('sg_datatables.response');
-            $responseService->setDatatable($datatable);
-
-            $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-            $datatableQueryBuilder->buildQuery();
-
-            //dump($datatableQueryBuilder->getQb()->getDQL()); die();
-
-            return $responseService->getResponse();
+            return $this
+                ->get('sg_datatables.response')
+                ->setDatatable($datatable)
+                ->getResponse();
         }
 
         return $this->render('entity/index.html.twig', array(
